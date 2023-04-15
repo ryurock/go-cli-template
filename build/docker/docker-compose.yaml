@@ -1,0 +1,21 @@
+#
+# Run Development Server
+#
+# docker compose run --rm --publish 3838:3838 app npm start
+# docker compose run --rm --publish 6006:6006 app npm run storybook
+#
+version: "3"
+services:
+  app:
+    container_name: "app"
+    build:
+      dockerfile: build/docker/Dockerfile
+      context: ../../
+    volumes:
+      - ../../:/app:cached
+    ports:
+      - "3838:3838"
+    command: /bin/ash
+    tty: true
+    stdin_open: true
+    working_dir: /app
