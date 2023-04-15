@@ -42,3 +42,4 @@ jobs:
         with:
           files: artifacts/Linux/linux-aarch64.zip
           draft: true
+          body_path: .github/CHANGELOG-template.md
