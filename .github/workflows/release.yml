@@ -16,41 +16,46 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Use Go ${{ matrix.node-version }}
+      - name: Use Go ${{ matrix.go-version }}
         uses: actions/setup-go@v4
         with:
-          node-version: ${{ matrix.go-version }}
+          go-version: ${{ matrix.go-version }}
+
+      - name: Create artifact dir
+        run: |
+          mkdir -p artifacts/Linux
 
       - name: Build
-        run: go build -o build/bin/ cmd/cli.go
+        run: GOOS=linux GOARCH=amd64 go build -o artifacts/Linux/ cmd/cli.go
 
       - name: Zip artifacts
         run: |
           cd build/bin/
-          zip -r Linux build/bin/
+          zip -r linux-aarch64 .
+        working-directory: ./artifacts/Linux
 
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            Changes in this Release
-            - First Change
-            - Second Change
-          draft: true
-          prerelease: false
+      # - name: Create release
+      #   id: create_release
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     tag_name: ${{ github.ref }}
+      #     release_name: Release ${{ github.ref }}
+      #     body: |
+      #       Changes in this Release
+      #       - First Change
+      #       - Second Change
+      #     draft: true
+      #     prerelease: false
 
-      - name: Upload Release Asset
-        id: upload-release-asset-linux
-        uses: actions/upload-release-asset@v1.0.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/bin/Linux.zip
-          asset_name: go_linux_amd64.zip
-          asset_content_type: application/zip
+      # - name: Upload Release Asset
+      #   id: upload-release-asset-linux
+      #   uses: actions/upload-release-asset@v1.0.2
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #     asset_path: ./build/bin/Linux.zip
+      #     asset_name: go_linux_amd64.zip
+      #     asset_content_type: application/zip
