@@ -33,6 +33,21 @@ jobs:
           zip -r linux-aarch64 .
         working-directory: ./artifacts/Linux
 
+     - name: Create release
+        id: create_release
+        uses: actions/create-release@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: true
+          prerelease: false
+
       # - name: Create release
       #   id: create_release
       #   uses: actions/create-release@v1
