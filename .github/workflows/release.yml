@@ -30,7 +30,6 @@ jobs:
 
       - name: Zip artifacts
         run: |
-          cd build/bin/
           zip -r linux-aarch64 .
         working-directory: ./artifacts/Linux
 
