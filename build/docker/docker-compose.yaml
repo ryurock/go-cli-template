@@ -13,6 +13,7 @@ services:
       context: ../../
     volumes:
       - ../../:/app:cached
+      - $HOME/.config/gh:/root/.config/gh:cached
     ports:
       - "3838:3838"
     command: /bin/ash

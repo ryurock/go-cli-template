@@ -4,11 +4,14 @@ Go 用の CLI Template
 
 # Usage
 
-```
-$ make help
+Docker Container login.
 
-build                          ビルドを行う
-help                           make taskの説明を表示する
-install                        初期構築を行う
-login                          コンテナにログインする
+```bash
+make login
+```
+
+Command Execute
+
+```bash
+go run cmd/cli.go
 ```
