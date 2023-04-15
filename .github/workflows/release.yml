@@ -38,28 +38,7 @@ jobs:
 
       - name: Release
         uses: softprops/action-gh-release@v1
-    # - name: Create release
-    #   id: create_release
-    #   uses: actions/create-release@v1
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #   with:
-    #     tag_name: ${{ github.ref }}
-    #     release_name: Release ${{ github.ref }}
-    #     body: |
-    #       Changes in this Release
-    #       - First Change
-    #       - Second Change
-    #     draft: true
-    #     prerelease: false
-
-    # - name: Upload Release Asset
-    #   id: upload-release-asset-linux
-    #   uses: actions/upload-release-asset@v1.0.2
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #   with:
-    #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-    #     asset_path: ./build/bin/Linux.zip
-    #     asset_name: go_linux_amd64.zip
-    #     asset_content_type: application/zip
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: artifacts/Linux/linux-aarch64.zip
+          draft: true
