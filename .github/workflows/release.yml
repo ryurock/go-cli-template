@@ -27,7 +27,7 @@ jobs:
       - name: Zip artifacts
         run: |
           cd build/bin/
-          zip -r Linux Linux/
+          zip -r Linux build/bin/
 
       - name: Create release
         id: create_release
