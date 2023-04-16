@@ -36,8 +36,8 @@ jobs:
 
       - name: Zip artifacts
         run: |
-          zip -r linux-aarch64 .
-        working-directory: ./artifacts/Linux
+          zip -r linux-amd64 .
+        working-directory: ./artifacts/Linux/amd64
 
       - name: Release
         uses: softprops/action-gh-release@v1
