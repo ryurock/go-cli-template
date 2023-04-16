@@ -25,6 +25,11 @@ import (
 	"fmt"
 	"os"
 
+<<<<<<< Updated upstream:internal/cli/root.go
+=======
+	"github.com/ryurock/cli/cmd/cli/cmd/version"
+	"github.com/ryurock/cli/pkg/config"
+>>>>>>> Stashed changes:cmd/cli/cmd/root.go
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -77,4 +82,8 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
 	}
+}
+
+func init() {
+	rootCmd.AddCommand(version.VersionCmd)
 }
