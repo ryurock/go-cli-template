@@ -8,7 +8,7 @@ import (
 
 	"github.com/cli/go-gh"
 	"github.com/fatih/color"
-	"github.com/ryurock/cli/pkg/config"
+	"github.com/ryurock/cli/config"
 	"gopkg.in/yaml.v3"
 
 	"github.com/rodaine/table"
@@ -17,17 +17,13 @@ import (
 
 var VersionCmd = &cobra.Command{
 	Use:   "version",
-	Short: "Print the version number of cli",
+	Short: "バージョンを操作するコマンド",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if len(args) == 0 {
 			versionRun(cmd, args)
 			return nil
 		}
 
-		err := cmd.Help()
-		if err != nil {
-			return err
-		}
 		message := color.RedString("a valid subcommand is required")
 		return errors.New(message)
 	},
