@@ -19,12 +19,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-package cli
+package cmd
 
 import (
 	"fmt"
 	"os"
 
+	"github.com/ryurock/cli/pkg/config"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -35,12 +36,17 @@ var cfgFile string
 var rootCmd = &cobra.Command{
 	Use:   "cli",
 	Short: "A brief description of your application",
-	Long:  `ここにアプリケーションの説明を書く`,
+	Long:  `A longer description that spans multiple lines and likely contains examples`,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
+	cliConfig := config.NewCliConfig()
+	rootCmd.Use = cliConfig.Config.Name
+	rootCmd.Short = cliConfig.Config.Description.Short
+	rootCmd.Long = cliConfig.Config.Description.Long
+
 	err := rootCmd.Execute()
 	if err != nil {
 		os.Exit(1)

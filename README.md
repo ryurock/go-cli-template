@@ -13,5 +13,5 @@ make login
 Command Execute
 
 ```bash
-go run cmd/cli.go
+go run cmd/cli/main.go
 ```
