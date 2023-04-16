@@ -88,4 +88,5 @@ func initConfig() {
 
 func init() {
 	rootCmd.AddCommand(version.VersionCmd)
+	rootCmd.PersistentFlags().StringP("format", "f", "text", "output format (json|yaml|table|text)")
 }

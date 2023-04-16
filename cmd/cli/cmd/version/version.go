@@ -1,12 +1,17 @@
 package version
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
 
 	"github.com/cli/go-gh"
 	"github.com/fatih/color"
+	"github.com/ryurock/cli/pkg/config"
+	"gopkg.in/yaml.v3"
+
+	"github.com/rodaine/table"
 	"github.com/spf13/cobra"
 )
 
@@ -18,11 +23,7 @@ var VersionCmd = &cobra.Command{
 			versionRun(cmd, args)
 			return nil
 		}
-		// subCommands := []string{"install", "list"}
-		// result := slices.Contains(subCommands, args[0])
-		// fmt.Println(result) // true
 
-		fmt.Println(args)
 		err := cmd.Help()
 		if err != nil {
 			return err
@@ -37,15 +38,48 @@ func versionRun(cmd *cobra.Command, args []string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	response := []struct {
+	githubResult := []struct {
 		Name string
 	}{}
-	err = client.Get("repos/ryurock/go-cli-template/tags", &response)
+
+	cliConfig := config.NewCliConfig()
+	githubOraganization := cliConfig.Config.GitHub.Repo.Organization
+	githubRepoName := cliConfig.Config.GitHub.Repo.Name
+	err = client.Get(fmt.Sprintf("repos/%s/%s/tags", githubOraganization, githubRepoName), &githubResult)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	color.Cyan(response[0].Name)
+	switch cmd.Parent().Flags().Lookup("format").Value.String() {
+	case "json":
+		response := map[string]interface{}{"name": githubResult[0].Name}
+
+		jsonData, err := json.Marshal(response)
+		if err != nil {
+			message := color.RedString(err.Error())
+			panic(message)
+		}
+
+		fmt.Printf("%s\n", jsonData)
+	case "yaml":
+		response := map[string]interface{}{"name": githubResult[0].Name}
+		yamlData, err := yaml.Marshal(response)
+		if err != nil {
+			message := color.RedString(err.Error())
+			panic(message)
+		}
+		fmt.Printf("%s", yamlData)
+
+	case "text":
+		color.Cyan(githubResult[0].Name)
+	case "table":
+		headerFmt := color.New(color.FgGreen, color.Underline).SprintfFunc()
+		columnFmt := color.New(color.FgYellow).SprintfFunc()
+		tbl := table.New("Name")
+		tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
+		tbl.AddRow(githubResult[0].Name)
+		tbl.Print()
+	}
 }
 
 func init() {
