@@ -1,25 +1,8 @@
 package config
 
-import (
-	"os"
-
-	"gopkg.in/yaml.v3"
-)
-
 type CliConfig struct {
-	Config      CliConfigRoot `yaml:"config"`
-	Description string        `yaml:"description"`
-}
-
-type CliConfigRoot struct {
-	Name        string
-	Description CliConfigRootDescription
-	GitHub      CliConfigGithub
-}
-
-type CliConfigRootDescription struct {
-	Short string
-	Long  string
+	Version string `default:"0.0.4"`
+	GitHub  CliConfigGithub
 }
 
 type CliConfigGithub struct {
@@ -27,21 +10,20 @@ type CliConfigGithub struct {
 }
 
 type CliConfigGithubRepo struct {
-	Organization string
-	Name         string
+	Organization string `default:"ryurock"`
+	Name         string `default:"cli"`
 }
 
 func NewCliConfig() *CliConfig {
-	var config CliConfig
-	b, err := os.ReadFile("config/cli.yaml")
-	if err != nil {
-		panic(err)
+	config := &CliConfig{
+		Version: "0.0.4",
+		GitHub: CliConfigGithub{
+			Repo: CliConfigGithubRepo{
+				Organization: "ryurock",
+				Name:         "go-cli-template",
+			},
+		},
 	}
 
-	err = yaml.Unmarshal(b, &config)
-	if err != nil {
-		panic(err)
-	}
-
-	return &config
+	return config
 }

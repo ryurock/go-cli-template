@@ -18,9 +18,17 @@ build: ## ビルドを行う
 
 .PHONY: release
 release: ## リリースを行う
-	tag=`${yq} '.config.version' config/cli.yaml` && \
+	@rm -rf artifacts
+	@go build -o artifacts/MacOS/arm64/cli cmd/cli/main.go
+	@cd artifacts/MacOS/arm64 && zip -r macOS-arm64 .
+
+	@tag=`${yq} '.config.version' config/cli.yaml` && \
 	git tag v$$tag && \
-	git push origin v$$tag
+	git push origin v$$tag && \
+	gh release create v$$tag "artifacts/MacOS/arm64/macOS-arm64.zip" \
+	  --title="v$$tag" \
+	  --notes-file CHANGELOG-template.md \
+		--prerelease
 
 .PHONY: release-rolback-rencent
 release-rolback-rencent: ## リリースを行う

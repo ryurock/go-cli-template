@@ -26,8 +26,8 @@ var versionListCmd = &cobra.Command{
 		}{}
 
 		cliConfig := config.NewCliConfig()
-		githubOraganization := cliConfig.Config.GitHub.Repo.Organization
-		githubRepoName := cliConfig.Config.GitHub.Repo.Name
+		githubOraganization := cliConfig.GitHub.Repo.Organization
+		githubRepoName := cliConfig.GitHub.Repo.Name
 		err = client.Get(fmt.Sprintf("repos/%s/%s/tags", githubOraganization, githubRepoName), &githubResult)
 		if err != nil {
 			log.Fatal(err)
