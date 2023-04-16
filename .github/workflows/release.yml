@@ -10,10 +10,6 @@ permissions:
 
 jobs:
   release:
-    strategy:
-      matrix:
-        GOOS: ['linux']
-        GOARCH: ['amd64', '386']
     runs-on: ubuntu-latest
 
     strategy:
@@ -36,6 +32,7 @@ jobs:
       - name: Build
         run: |
           GOOS=linux GOARCH=amd64 go build -o artifacts/Linux/amd64/cli cmd/cli/main.go
+        platform: linux/arm64
 
       - name: Zip artifacts
         run: |
