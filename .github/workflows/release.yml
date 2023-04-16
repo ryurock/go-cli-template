@@ -26,10 +26,13 @@ jobs:
 
       - name: Create artifact dir
         run: |
-          mkdir -p artifacts/Linux
+          mkdir -p artifacts/Linux/amd64
+          mkdir -p artifacts/Linux/arm64
 
       - name: Build
-        run: GOOS=linux GOARCH=amd64 go build -o artifacts/Linux/ cmd/cli/main.go
+        run: |
+          GOOS=linux GOARCH=amd64 go build -o artifacts/Linux/amd64/cli cmd/cli/main.go
+        runs-on: ARM64
 
       - name: Zip artifacts
         run: |
