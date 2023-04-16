@@ -15,22 +15,24 @@ import (
 
 var versionListCmd = &cobra.Command{
 	Use:   "list",
-	Short: "List all available versions",
+	Short: "バージョンの一覧を表示します",
 	Run: func(cmd *cobra.Command, args []string) {
 		client, err := gh.RESTClient(nil)
 		if err != nil {
 			log.Fatal(err)
 		}
+
 		githubResult := []struct {
 			Name string
 		}{}
 
 		cliConfig := config.NewCliConfig()
-		githubOraganization := cliConfig.Config.GitHub.Repo.Organization
-		githubRepoName := cliConfig.Config.GitHub.Repo.Name
+		githubOraganization := cliConfig.GitHub.Repo.Organization
+		githubRepoName := cliConfig.GitHub.Repo.Name
 		err = client.Get(fmt.Sprintf("repos/%s/%s/tags", githubOraganization, githubRepoName), &githubResult)
 		if err != nil {
-			log.Fatal(err)
+			message := color.RedString(err.Error())
+			panic(message)
 		}
 
 		switch cmd.Parent().Flags().Lookup("format").Value.String() {

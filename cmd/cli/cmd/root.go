@@ -26,7 +26,6 @@ import (
 	"os"
 
 	"github.com/ryurock/cli/cmd/cli/cmd/version"
-	"github.com/ryurock/cli/pkg/config"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -36,18 +35,13 @@ var cfgFile string
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "cli",
-	Short: "A brief description of your application",
-	Long:  `A longer description that spans multiple lines and likely contains examples`,
+	Short: "CLI の short Description を記載してください",
+	Long:  `CLI の Long Description を記載してください`,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-	cliConfig := config.NewCliConfig()
-	rootCmd.Use = cliConfig.Config.Name
-	rootCmd.Short = cliConfig.Config.Description.Short
-	rootCmd.Long = cliConfig.Config.Description.Long
-
 	err := rootCmd.Execute()
 	if err != nil {
 		os.Exit(1)
