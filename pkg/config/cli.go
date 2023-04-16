@@ -14,11 +14,21 @@ type CliConfig struct {
 type CliConfigRoot struct {
 	Name        string
 	Description CliConfigRootDescription
+	GitHub      CliConfigGithub
 }
 
 type CliConfigRootDescription struct {
 	Short string
 	Long  string
+}
+
+type CliConfigGithub struct {
+	Repo CliConfigGithubRepo
+}
+
+type CliConfigGithubRepo struct {
+	Organization string
+	Name         string
 }
 
 func NewCliConfig() *CliConfig {

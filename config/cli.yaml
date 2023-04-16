@@ -5,3 +5,7 @@ config:
   description:
     short: CLI の short Description を記載してください
     logn: CLI の Long Description を記載してください
+  github:
+    repo:
+      organization: ryurock
+      name: go-cli-template

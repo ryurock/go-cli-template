@@ -25,6 +25,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/ryurock/cli/cmd/cli/cmd/version"
 	"github.com/ryurock/cli/pkg/config"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -83,4 +84,9 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
 	}
+}
+
+func init() {
+	rootCmd.AddCommand(version.VersionCmd)
+	rootCmd.PersistentFlags().StringP("format", "f", "text", "output format (json|yaml|table|text)")
 }
