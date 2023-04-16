@@ -24,7 +24,7 @@ release: ## リリースを行う
 
 .PHONY: release-rolback-rencent
 release-rolback-rencent: ## リリースを行う
-	tag=`${yq} '.config.version' config/cli.yaml` && \
+	@tag=`${yq} '.config.version' config/cli.yaml` && \
 	git tag -d v$$tag || true && \
 	git push --delete origin v$$tag || true && \
 	gh release delete v$$tag || true
