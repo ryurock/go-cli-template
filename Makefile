@@ -22,7 +22,7 @@ release: ## リリースを行う
 	@go build -o artifacts/MacOS/arm64/cli cmd/cli/main.go
 	@cd artifacts/MacOS/arm64 && zip -r macOS-arm64 .
 
-	@tag=`${yq} '.config.version' config/cli.yaml` && \
+	@tag=`${yq} '.version' config/cli.yaml` && \
 	git tag v$$tag && \
 	git push origin v$$tag && \
 	gh release create v$$tag "artifacts/MacOS/arm64/macOS-arm64.zip" \

@@ -84,4 +84,5 @@ func versionRun(cmd *cobra.Command, args []string) {
 
 func init() {
 	VersionCmd.AddCommand(versionListCmd)
+	VersionCmd.AddCommand(versionInstallCmd)
 }
