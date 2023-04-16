@@ -25,6 +25,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/ryurock/cli/cmd/cli/cmd/configure"
 	"github.com/ryurock/cli/cmd/cli/cmd/version"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -82,5 +83,6 @@ func initConfig() {
 
 func init() {
 	rootCmd.AddCommand(version.VersionCmd)
+	rootCmd.AddCommand(configure.ConfugureCmd)
 	rootCmd.PersistentFlags().StringP("format", "f", "text", "output format (json|yaml|table|text)")
 }

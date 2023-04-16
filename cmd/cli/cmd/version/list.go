@@ -8,7 +8,7 @@ import (
 	"github.com/cli/go-gh"
 	"github.com/fatih/color"
 	"github.com/rodaine/table"
-	"github.com/ryurock/cli/pkg/config"
+	"github.com/ryurock/cli/config"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
 )
