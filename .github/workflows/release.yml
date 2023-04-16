@@ -29,7 +29,7 @@ jobs:
           mkdir -p artifacts/Linux
 
       - name: Build
-        run: GOOS=linux GOARCH=amd64 go build -o artifacts/Linux/ cmd/cli.go
+        run: GOOS=linux GOARCH=amd64 go build -o artifacts/Linux/ cmd/cli/main.go
 
       - name: Zip artifacts
         run: |
