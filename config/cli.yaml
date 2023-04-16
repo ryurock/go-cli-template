@@ -1,6 +1,7 @@
 description: CLI 設定ファイル
 config:
   name: cli
+  version: 0.0.2
   description:
     short: CLI の short Description を記載してください
     logn: CLI の Long Description を記載してください

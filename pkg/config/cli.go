@@ -23,7 +23,7 @@ type CliConfigRootDescription struct {
 
 func NewCliConfig() *CliConfig {
 	var config CliConfig
-	b, err := os.ReadFile("cmd/cli/config.yaml")
+	b, err := os.ReadFile("config/cli.yaml")
 	if err != nil {
 		panic(err)
 	}
